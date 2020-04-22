@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 별칭 사용 가능 -->
+	<typeAliases>
+		<typeAlias type="com.ict.service.IVO" alias="ivo"/>
+		<typeAlias type="com.ict.service.MVO" alias="mvo"/>
+		<typeAlias type="com.ict.service.EVO" alias="evo"/>
+		<typeAlias type="com.ict.service.CVO" alias="cvo"/>
+		<typeAlias type="com.ict.service.OVO" alias="ovo"/>
+		<typeAlias type="com.ict.service.ODVO" alias="odvo"/>
+		<typeAlias type="com.ict.service.RVO" alias="rvo"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mappings/mapper.xml" />
+	</mappers>
+</configuration>

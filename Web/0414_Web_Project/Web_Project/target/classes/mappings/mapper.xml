@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ict.service.mapper">
+	<!-- get all Item info  -->
+	<select id="get_item_list" resultType="ivo">
+		select * from sf_item where item_category = #{item_category} order by idx desc
+	</select>
+	
+	<select id = "item_sub_detail" parameterType="String" resultType="ivo">
+		select * from sf_item where idx = #{idx}
+	</select>
+	
+	<insert id="insert_item"  parameterType="ivo">
+		insert into sf_item values(sf_item_seq.nextval, #{item_category}, #{item_name},
+		 #{item_spec},#{item_price}, #{item_cal}, #{item_content}, #{item_aller} , #{file_name} )
+	</insert>
+	
+	<update id="update_item"  parameterType="ivo">
+		update sf_item set item_category=#{item_category}, item_name=#{item_name}, 
+		item_spec=#{item_spec},item_price=#{item_price}, item_cal=#{item_cal}, 
+		item_content=#{item_content}, item_aller=#{item_aller} , file_name= #{file_name} 
+		where idx=#{idx}
+	</update>
+	
+	<!-- login  -->
+	<select id="login" parameterType="mvo" resultType="mvo">
+		select * from sf_member where id = #{id} and pwd = #{pwd}
+	</select>
+	
+	<!-- get event information for all  -->
+	<select id="get_event_list" resultType="evo">
+		select * from sf_event
+	</select>
+	
+	<!-- get event information for one   -->
+	<select id="get_sub_event" parameterType="String" resultType="evo">
+		select * from sf_event where idx=#{idx}
+	</select>
+	
+	<insert id="insert_event"  parameterType="evo">
+		insert into sf_event values(sf_event_seq.nextval, #{title},#{content},
+		 #{sm_img}, #{lg_img},#{s_date}, #{e_date})
+	</insert>
+	
+	<update id="update_event" parameterType="evo">
+		update sf_event set title=#{title}, content=#{content}, sm_img=#{sm_img}, lg_img=#{lg_img}, 
+		s_date=#{s_date}, e_date=#{e_date}  where idx=#{idx}
+	</update>
+	
+	
+	<!-- cart  -->
+	<select id = "get_cart_list" parameterType="String" resultType="cvo">
+		select * from sf_cart where cust_id = #{cust_id}
+	</select>
+	
+	<!-- cart에 들어있는 아이템의 갯수 수정  -->
+	<update id="cart_edit" parameterType="cvo">
+		update sf_cart set item_amount=#{item_amount} where cust_id=#{cust_id} and item_id=#{item_id}
+	</update>
+	
+	<select id= "get_cart_item" parameterType="Map" resultType="cvo">
+		select * from sf_cart where cust_id = #{cust_id} and item_id = #{item_id}
+	</select>
+	
+		<!-- 카트에 제품 넣기  -->
+	<insert id="cart_insert" parameterType="cvo">
+		insert into sf_cart values(cart_seq.nextval,#{cust_id},#{item_id},#{item_name},#{item_price},1)
+	</insert>
+	
+	<!--item_id와 cust_id이 일치하는 레코드 갯수 증가-->
+	<update id="cart_update" parameterType="cvo">
+		update sf_cart set item_amount=item_amount+1 where item_id=#{item_id} and cust_id=#{cust_id} 
+	</update>
+	
+	<!-- cart 아이템 삭제  -->
+	<delete id = "cart_delete" parameterType="cvo">
+		delete from sf_cart where cust_id=#{cust_id} and item_id=#{item_id}
+	</delete>
+	
+	<!-- member join -->
+	<insert id="member_insert" parameterType="mvo">
+		insert into sf_member values(#{id}, #{name}, #{pwd}, #{addr})
+	</insert>
+	
+	<!-- order insert  -->
+	<insert id="order_insert" parameterType="Map">
+		insert into sf_order values(sf_order_seq.nextval, #{cust_id}, sysdate, 1, #{total_price})
+	</insert>
+	
+	<!-- order detail insert  -->
+	 <insert id="order_detail_insert" parameterType="odvo">
+		insert into sf_order_detail values(sf_order_detail_seq.nextval, #{order_id}, #{item_name}, #{item_price}, #{item_quantity}, #{item_id}, #{ch_review})
+	</insert> 
+	
+	<!--  order id get-->
+		<select id="order_id_get" parameterType="Map" resultType="String">
+		select order_id from sf_order where cust_id=#{cust_id} and total_price=#{total_price} and order_status = 1
+	</select> 
+	
+	<!-- customer order list  -->
+	<select id="cust_order_list" parameterType="String" resultType="ovo">
+		select * from sf_order where cust_id=#{cust_id}
+	</select>
+	
+	<!-- customer order detail -->
+	<select id="order_detail" parameterType="String" resultType="odvo">
+		select * from sf_order_detail where order_id=#{order_id}
+	</select>
+	
+	<!-- one order info  -->
+	<select id="one_order_get" parameterType="String" resultType="ovo">
+		select * from sf_order where order_id=#{order_id}
+	</select>
+	
+	<!-- all order list for admin -->
+	<select id="admin_order_list" resultType="ovo">
+		select * from sf_order
+	</select>
+	
+	<!-- update_order_detail_review -->
+	<update id="update_order_detail_review" parameterType="Map">
+		update sf_order_detail set ch_review= #{ch_review} where order_detail_id=#{order_detail_id}
+	</update>
+	
+	
+	<!--  update admin order status-->
+	<update id="update_order_status" parameterType="Map">
+		update sf_order set order_status=#{order_status} where order_id=#{order_id}
+	</update>
+	
+	
+	<!-- Review  -->
+	<!-- 전체 게시물의 수 -->
+	<select id="totalCount" resultType="int">
+		select count(*) from sf_review
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="review_list" parameterType="Map" resultType="rvo">
+		select * from (
+			select rownum r_num , a.* from (
+				select * from sf_review order by groups desc, lev asc 
+			) a		
+		 ) where r_num between #{begin} and #{end}
+	</select>
+	
+	<!-- 원글 삽입 -->
+	<insert id="review_insert" parameterType="rvo">
+		 insert into sf_review values(sf_review_seq.nextval, #{cust_id}, #{item_id},
+		#{review}, #{rank}, 0, sysdate, #{file_name}, sf_group_seq.nextval, 0, 0, #{item_name}, #{order_detail_id}) 
+		
+	</insert>
+	
+	<!-- hit업데이트 -->
+	<update id="review_hit" parameterType="String">
+		update sf_review set hit = hit+1 where idx = #{idx}
+	</update>
+	
+	<!-- 상세보기 -->
+	<select id="one_review_list" parameterType="String" resultType="rvo">
+		select * from sf_review where idx = #{idx}
+	</select>
+	
+	<!-- 댓글전 levup  -->
+	<update id="review_levup" parameterType="Map">
+		update sf_review set lev=lev+1 where groups=#{groups} and lev>=#{lev}
+	</update>
+	
+	<!-- 댓글 삽입 -->
+	<insert id="review_ans_insert" parameterType="rvo">
+		insert into sf_review values(board_seq.nextval, #{cust_id}, #{item_id}, 
+		#{review},#{rank},0, sysdate, #{file_name},#{groups}, #{step}, #{lev})
+	</insert>
+	
+	<!-- update -->
+	<update id="review_update" parameterType="rvo">
+		update sf_review set review=#{review}, rank=#{rank}, file_name=#{file_name} where idx = #{idx}
+	</update>
+	
+	<!-- 삭제 -->
+	 <delete id="review_delete" parameterType="String">
+		delete from sf_review where idx = #{idx}
+	</delete>
+	
+
+</mapper>
+
+
+
+
+
+
+
+

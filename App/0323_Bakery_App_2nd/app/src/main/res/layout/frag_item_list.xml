@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4">
+
+
+            <ImageView
+                android:id="@+id/img_item_01"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/cookie01" />
+
+            <TextView
+                android:id="@+id/txt_item_01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="버터 타르트 \n 5,000원" />
+
+            <ImageView
+                android:id="@+id/img_item_02"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/muffine01" />
+
+            <TextView
+                android:id="@+id/txt_item_02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="초코 타르트 \n 8,000원" />
+
+            <ImageView
+                android:id="@+id/img_item_03"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/cookie02" />
+
+            <TextView
+                android:id="@+id/txt_item_03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="버터 타르트 \n 5,000원" />
+
+            <ImageView
+                android:id="@+id/img_item_04"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/muffine02" />
+
+            <TextView
+                android:id="@+id/txt_item_04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="초코 타르트 \n 8,000원" />
+
+            <ImageView
+                android:id="@+id/img_item_05"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/cookie03" />
+
+            <TextView
+                android:id="@+id/txt_item_05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="버터 타르트 \n 5,000원" />
+
+            <ImageView
+                android:id="@+id/img_item_06"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/muffine03" />
+
+            <TextView
+                android:id="@+id/txt_item_06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="초코 타르트 \n 8,000원" />
+
+            <ImageView
+                android:id="@+id/img_item_07"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/cookie04" />
+
+            <TextView
+                android:id="@+id/txt_item_07"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="버터 타르트 \n 5,000원" />
+
+            <ImageView
+                android:id="@+id/img_item_08"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/muffine05" />
+
+            <TextView
+                android:id="@+id/txt_item_08"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="초코 타르트 \n 8,000원" />
+
+        </GridLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

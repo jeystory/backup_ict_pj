@@ -1,0 +1,116 @@
+package com.ict.network03;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+import com.ict.db.VO;
+
+public class NetworkDB implements Runnable{
+	ServerSocket ss ;
+	Socket s;
+	BufferedReader reader;
+	BufferedWriter writer;
+	
+	public NetworkDB() {
+		try {
+			ss = new ServerSocket(7888);
+			System.out.println("서버 대기중...");
+			
+			new Thread(this).start();
+		} catch (Exception e) {
+		}
+	}
+	/*
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				s = ss.accept();
+				reader = new BufferedReader(
+						new InputStreamReader(s.getInputStream()));
+				writer = new BufferedWriter(
+						new OutputStreamWriter(s.getOutputStream()));
+				
+				String msg = reader.readLine();
+				
+				if(msg.equals("test")) {
+					writer.write("connet success" + System.getProperty("line.separator"));
+					writer.flush();
+					System.out.println("test ok");
+				}else if(msg.equals("db")) {
+					DBConnection db = new DBConnection();
+					ArrayList<String>  list = db.selectAll();
+					
+					if(list.size() > 0) {
+						StringBuffer sb = new StringBuffer();
+						
+						for (String k : list) {
+							sb.append(k+",");
+						}
+						writer.write(sb.toString() + System.getProperty("line.separator"));
+						writer.flush();
+					}else {
+						writer.write("no data" + System.getProperty("line.separator"));
+						writer.flush();
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+	}
+	*/
+	
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				s = ss.accept();
+				reader = new BufferedReader(
+						new InputStreamReader(s.getInputStream()));
+				writer = new BufferedWriter(
+						new OutputStreamWriter(s.getOutputStream()));
+				
+				String msg = reader.readLine();
+				String[] arrMsg = msg.split(":");
+				
+				
+				if(arrMsg[0].equals("login")) {
+					for(int i =0;i<arrMsg.length;i++)
+						System.out.println(arrMsg[i]);
+				
+					
+					DBConnection db = new DBConnection();
+
+					String rid = db.userLogin(arrMsg[1], arrMsg[2]);	//id 와 pwd
+					System.out.println("id : " + rid );
+					
+					if(rid != null) {
+						System.out.println("ok : id : " + rid );
+						writer.write("login_ok" + System.getProperty("line.separator"));
+						writer.flush();
+					}else {
+						System.out.println("fail id : " + rid );
+						writer.write("login_fail" + System.getProperty("line.separator"));
+						writer.flush();
+					}
+					
+				}else {
+					System.out.println("무엇일까?");
+					
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		new NetworkDB();
+	}
+}

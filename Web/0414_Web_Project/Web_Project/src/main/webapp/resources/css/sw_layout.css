@@ -1,0 +1,51 @@
+*{margin: 0 0;}
+.footer{
+	position: fixed;
+   /* 	left: 0;
+   	bottom: 5px; */
+   	width: 100%;
+  	color: black;
+   	text-align: center; 
+   	clear:both;
+}
+
+.header {	background-color:  #f1bdcf; } 
+
+.header img{
+	width : 100%;
+	height : 300px; 	
+} 
+	
+.main_content {
+		margin-top : 20px;
+  		margin-left: 200px;
+  		padding-left: 20px;
+}
+
+.main_menu{
+	margin : 0;
+	padding : 0;
+}
+
+
+/* Style the side menu */
+.side_menu {
+	height: 100%;
+	width: 200px;
+	position: absolute;
+	background-color: lightcoral;
+	padding: 5px;
+}
+
+/* Side navigation links */
+.side_menu a {
+	color: white;
+	padding: 16px;
+	text-decoration: none;
+	display: block;
+}
+
+/* Change color on hover */
+.side_menu a:hover {
+	color: black;
+}
